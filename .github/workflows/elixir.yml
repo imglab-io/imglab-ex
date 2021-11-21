@@ -12,23 +12,16 @@ env:
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        elixir: [1.2.6]
-        otp: [18.3.4]
+    runs-on: ubuntu-latests
+    container: elixir:1.12.3
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Elixir
-      uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-      with:
-        elixir-version: ${{ matrix.elixir }} # Define the elixir version [required]
-        otp-version: ${{ matrix.otp }} # Define the OTP version [required]
     - name: Restore dependencies cache
       uses: actions/cache@v2
       with:
         path: deps
-        key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('**/mix.lock') }}
+        key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
