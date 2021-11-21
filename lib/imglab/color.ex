@@ -154,8 +154,6 @@ defmodule Imglab.Color do
     yellowgreen
   )
 
-  defguardp is_component(component) when is_integer(component) and component >= 0 and component <= 255
-
   @doc """
   Returns a RGBA color as string.
 
@@ -172,7 +170,13 @@ defmodule Imglab.Color do
 
   """
   @spec color(integer, integer, integer, integer) :: binary
-  defmacro color(r, g, b, a) when is_component(r) and is_component(g) and is_component(b) and is_component(a) do
+  defmacro color(r, g, b, a)
+  when
+    is_integer(r) and r >= 0 and r <= 255 and
+    is_integer(g) and g >= 0 and g <= 255 and
+    is_integer(b) and b >= 0 and b <= 255 and
+    is_integer(a) and a >= 0 and a <= 255
+  do
     Enum.join([r, g, b, a], ",")
   end
 
@@ -192,7 +196,12 @@ defmodule Imglab.Color do
 
   """
   @spec color(integer, integer, integer) :: binary
-  defmacro color(r, g, b) when is_component(r) and is_component(g) and is_component(b) do
+  defmacro color(r, g, b)
+  when
+    is_integer(r) and r >= 0 and r <= 255 and
+    is_integer(g) and g >= 0 and g <= 255 and
+    is_integer(b) and b >= 0 and b <= 255
+  do
     Enum.join([r, g, b], ",")
   end
 
@@ -212,7 +221,5 @@ defmodule Imglab.Color do
 
   """
   @spec color(binary) :: binary
-  defmacro color(name) when is_binary(name) and name in @colors do
-    name
-  end
+  defmacro color(name) when is_binary(name) and name in @colors, do: name
 end

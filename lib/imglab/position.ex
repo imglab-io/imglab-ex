@@ -6,10 +6,6 @@ defmodule Imglab.Position do
   @horizontal ~w(left center right)
   @vertical ~w(top middle bottom)
 
-  defguardp is_position(pos) when is_binary(pos) and (pos in @horizontal or pos in @vertical)
-  defguardp is_horizontal_position(pos) when is_binary(pos) and pos in @horizontal
-  defguardp is_vertical_position(pos) when is_binary(pos) and pos in @vertical
-
   @doc """
   Returns a position as string specified with horizontal and vertical values:
 
@@ -35,11 +31,19 @@ defmodule Imglab.Position do
 
   """
   @spec position(binary, binary) :: binary
-  defmacro position(horizontal, vertical) when is_horizontal_position(horizontal) and is_vertical_position(vertical) do
+  defmacro position(horizontal, vertical)
+  when
+    is_binary(horizontal) and horizontal in @horizontal and
+    is_binary(vertical) and vertical in @vertical
+  do
     Enum.join([horizontal, vertical], ",")
   end
 
-  defmacro position(vertical, horizontal) when is_vertical_position(vertical) and is_horizontal_position(horizontal) do
+  defmacro position(vertical, horizontal)
+  when
+    is_binary(vertical) and vertical in @vertical and
+    is_binary(horizontal) and horizontal in @horizontal
+  do
     Enum.join([vertical, horizontal], ",")
   end
 
@@ -59,5 +63,5 @@ defmodule Imglab.Position do
 
   """
   @spec position(binary) :: binary
-  defmacro position(pos) when is_position(pos), do: pos
+  defmacro position(pos) when is_binary(pos) and (pos in @horizontal or pos in @vertical), do: pos
 end
