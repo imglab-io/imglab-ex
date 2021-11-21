@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         elixir: [1.12.3, 1.8.2]
+        otp-version: [24.1, 23.3]
     steps:
     - uses: actions/checkout@v2
     - name: Set up Elixir
@@ -27,7 +28,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: deps
-        key: ${{ runner.os }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+        key: ${{ runner.os }}-${{ matrix.elixir }}-${{ matrix.otp }}-${{ hashFiles('**/mix.lock') }}
     - name: Install dependencies
       run: mix deps.get
     - name: Run tests
