@@ -12,7 +12,7 @@ env:
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latests
+    runs-on: ubuntu-latest
     container: elixir:1.12.3
     steps:
     - uses: actions/checkout@v2
