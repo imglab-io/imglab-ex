@@ -20,6 +20,10 @@ And run:
 $ mix deps.get
 ```
 
+## Elixir compatibility
+
+`imglab` has been successfully tested on the following Elixir versions: `1.12`, `1.11`, `1.10`, `1.9`, `1.8`, `1.7`, `1.6`, `1.5`, and `1.4`.
+
 ## Generating URLs
 
 You can use `Imglab.url/3` function to generate imglab compatible URLs for your application.
