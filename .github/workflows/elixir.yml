@@ -13,7 +13,10 @@ jobs:
   build:
     name: Build and test
     runs-on: ubuntu-latest
-    container: elixir:1.12.3
+    strategy:
+      matrix:
+        elixir: [1.12.3, 1.11.4]
+    container: elixir:${{ matrix.elixir }}
     steps:
     - uses: actions/checkout@v2
     - name: Restore dependencies cache
