@@ -68,27 +68,28 @@ defmodule Imglab do
       "https://cdn.imglab.io/assets/image.jpeg"
 
   """
-  @spec url(binary | Source.t, binary, keyword) :: binary
+  @spec url(binary | Source.t(), binary, keyword) :: binary
   def url(source_name_or_source, path, params \\ [])
+
   def url(source_name, path, params) when is_binary(source_name) and is_binary(path) and is_list(params) do
     url(Source.new(source_name), path, params)
   end
+
   def url(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
     normalized_path = Utils.normalize_path(path)
     normalized_params = Utils.normalize_params(params)
 
-    URI.to_string(
-      %URI{
-        scheme: Source.scheme(source),
-        host: Source.host(source),
-        port: source.port,
-        path: Path.join("/", Source.path(source, normalized_path)),
-        query: encode_params(source, normalized_path, normalized_params)
-      }
-    )
+    URI.to_string(%URI{
+      scheme: Source.scheme(source),
+      host: Source.host(source),
+      port: source.port,
+      path: Path.join("/", Source.path(source, normalized_path)),
+      query: encode_params(source, normalized_path, normalized_params)
+    })
   end
 
-  defp encode_params(%Source{} = source, path, params) when is_binary(path) and is_list(params) and length(params) > 0 do
+  defp encode_params(%Source{} = source, path, params)
+       when is_binary(path) and is_list(params) and length(params) > 0 do
     if Source.secure?(source) do
       signature = Signature.generate(source, path, URI.encode_query(params))
 
@@ -97,6 +98,7 @@ defmodule Imglab do
       URI.encode_query(params)
     end
   end
+
   defp encode_params(%Source{} = source, path, _params) when is_binary(path) do
     if Source.secure?(source) do
       signature = Signature.generate(source, path)

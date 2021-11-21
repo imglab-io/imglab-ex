@@ -10,25 +10,23 @@ defmodule Imglab.Source do
   @derive {Inspect, except: [:secure_key, :secure_salt]}
   @enforce_keys [:name]
 
-  defstruct [
-    host: @default_host,
-    https: @default_https,
-    name: nil,
-    port: nil,
-    secure_key: nil,
-    secure_salt: nil,
-    subdomains: @default_subdomains
-  ]
+  defstruct host: @default_host,
+            https: @default_https,
+            name: nil,
+            port: nil,
+            secure_key: nil,
+            secure_salt: nil,
+            subdomains: @default_subdomains
 
   @type t :: %__MODULE__{
-    host: binary,
-    https: boolean,
-    name: binary,
-    port: nil | :inet.port_number,
-    secure_key: nil | binary,
-    secure_salt: nil | binary,
-    subdomains: boolean
-  }
+          host: binary,
+          https: boolean,
+          name: binary,
+          port: nil | :inet.port_number(),
+          secure_key: nil | binary,
+          secure_salt: nil | binary,
+          subdomains: boolean
+        }
 
   @doc """
   Returns a [Source struct](`t:t/0`) with the specified options for the source.

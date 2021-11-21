@@ -38,6 +38,7 @@ defmodule Imglab.Position do
   defmacro position(horizontal, vertical) when is_horizontal_position(horizontal) and is_vertical_position(vertical) do
     Enum.join([horizontal, vertical], ",")
   end
+
   defmacro position(vertical, horizontal) when is_vertical_position(vertical) and is_horizontal_position(horizontal) do
     Enum.join([vertical, horizontal], ",")
   end

@@ -5,7 +5,16 @@ defmodule Imglab.SourceTest do
   alias Imglab.Source
 
   test "new/2" do
-    assert Source.new("assets") == %Source{name: "assets", subdomains: false, https: true, host: "cdn.imglab.io", port: nil, secure_key: nil, secure_salt: nil}
+    assert Source.new("assets") == %Source{
+             name: "assets",
+             subdomains: false,
+             https: true,
+             host: "cdn.imglab.io",
+             port: nil,
+             secure_key: nil,
+             secure_salt: nil
+           }
+
     assert Source.new("assets", subdomains: true) == %Source{name: "assets", subdomains: true}
     assert Source.new("assets", https: false) == %Source{name: "assets", https: false}
     assert Source.new("assets", host: "imglab.net") == %Source{name: "assets", host: "imglab.net"}
@@ -32,7 +41,10 @@ defmodule Imglab.SourceTest do
     assert Source.path(Source.new("assets"), "example.jpeg") == "assets/example.jpeg"
     assert Source.path(Source.new("assets"), "subfolder/example.jpeg") == "assets/subfolder/example.jpeg"
     assert Source.path(Source.new("assets", subdomains: false), "example.jpeg") == "assets/example.jpeg"
-    assert Source.path(Source.new("assets", subdomains: false), "subfolder/example.jpeg") == "assets/subfolder/example.jpeg"
+
+    assert Source.path(Source.new("assets", subdomains: false), "subfolder/example.jpeg") ==
+             "assets/subfolder/example.jpeg"
+
     assert Source.path(Source.new("assets", subdomains: true), "example.jpeg") == "example.jpeg"
     assert Source.path(Source.new("assets", subdomains: true), "subfolder/example.jpeg") == "subfolder/example.jpeg"
   end
