@@ -24,7 +24,7 @@ jobs:
       with:
         path: deps
         key: ${{ runner.os }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-mix-
+        restore-keys: ${{ runner.os }}-${{ matrix.elixir }}-
     - name: Install Hex
       run: mix local.hex --force
     - name: Install dependencies
