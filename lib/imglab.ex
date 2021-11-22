@@ -88,6 +88,7 @@ defmodule Imglab do
     })
   end
 
+  @spec encode_params(Source.t(), binary, list) :: binary
   defp encode_params(%Source{} = source, path, params)
        when is_binary(path) and is_list(params) and length(params) > 0 do
     if Source.secure?(source) do

@@ -13,6 +13,7 @@ defmodule Imglab.Utils do
     end)
   end
 
+  @spec dasherize(atom | binary) :: binary
   defp dasherize(atom) when is_atom(atom), do: dasherize(Atom.to_string(atom))
   defp dasherize(string) when is_binary(string), do: String.replace(string, "_", "-")
 end

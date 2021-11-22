@@ -3,14 +3,6 @@ defmodule Imglab.Signature do
 
   alias Imglab.Source
 
-  defmacrop hmac(key, data) do
-    if System.otp_release() >= "22" do
-      quote do: :crypto.mac(:hmac, :sha256, unquote(key), unquote(data))
-    else
-      quote do: :crypto.hmac(:sha256, unquote(key), unquote(data))
-    end
-  end
-
   @spec generate(Source.t(), binary, nil | binary) :: binary
   def generate(%Source{} = source, path, encoded_params \\ nil)
       when is_binary(path) and (is_binary(encoded_params) or is_nil(encoded_params)) do
@@ -22,5 +14,13 @@ defmodule Imglab.Signature do
 
     hmac(decoded_secure_key, data)
     |> Base.url_encode64(padding: false)
+  end
+
+  if Code.ensure_loaded(:crypto) && function_exported?(:crypto, :mac, 4) do
+    @spec hmac(binary, binary) :: binary
+    defp hmac(key, data) when is_binary(key) and is_binary(data), do: :crypto.mac(:hmac, :sha256, key, data)
+  else
+    @spec hmac(binary, binary) :: binary
+    defp hmac(key, data) when is_binary(key) and is_binary(data), do: :crypto.hmac(:sha256, key, data)
   end
 end
