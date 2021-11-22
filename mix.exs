@@ -30,7 +30,7 @@ defmodule Imglab.MixProject do
   end
 
   defp description do
-    "Official Elixir library to integrate with imglab."
+    "Official imglab Elixir library."
   end
 
   defp package do
