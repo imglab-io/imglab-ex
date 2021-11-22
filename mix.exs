@@ -7,22 +7,46 @@ defmodule Imglab.MixProject do
       version: "0.1.0",
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description: description(),
+      package: package(),
+      name: "imglab",
+      source_url: "https://github.com/imglab-io/imglab-ex",
+      docs: docs()
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger, :crypto]
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.25", only: :dev, runtime: false},
+      {:dialyxir, "~> 0.5", only: :dev, runtime: false}
+    ]
+  end
+
+  defp description do
+    "Official Elixir library to integrate with imglab."
+  end
+
+  defp package do
+    [
+      name: "imglab",
+      files: ["lib", "mix.exs", "README*", "LICENSE*"],
+      maintainers: ["imglab"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/imglab-io/imglab-ex"}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: ["README.md", "LICENSE"]
     ]
   end
 end
