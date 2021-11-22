@@ -28,7 +28,7 @@ $ mix deps.get
 
 You can use `Imglab.url/3` function to generate imglab compatible URLs for your application.
 
-The easiest way to generate a URL is to specify the `source_name`, `path` and required `parameters`:
+The easiest way to generate a URL is to specify the `source_name`, `path` and required `parameters`:
 
 ```elixir
 Imglab.url("assets", "image.jpeg", width: 500, height: 600)
@@ -211,7 +211,7 @@ Imglab.url(
 "https://cdn.imglab.io/assets/image.jpeg?width=500&height=600&watermark=https%3A%2F%2Fcdn.imglab.io%2Fmarketing%2Flogo.svg%3Fwidth%3D100%26format%3Dpng"
 ```
 
-Using secure sources for URLs parameter values it's possible too:
+Using secure sources for URLs parameter values is possible too:
 
 ```elixir
 marketing_source = Imglab.Source.new("marketing", secure_key: "marketing-secure-key", secure_salt: "marketing-secure-salt")
