@@ -3,9 +3,9 @@ defmodule Imglab.Source do
   Provides a way to define and store information about a imglab source.
   """
 
-  @default_subdomains false
-  @default_https true
   @default_host "cdn.imglab.io"
+  @default_https true
+  @default_subdomains false
 
   @derive {Inspect, except: [:secure_key, :secure_salt]}
   @enforce_keys [:name]
