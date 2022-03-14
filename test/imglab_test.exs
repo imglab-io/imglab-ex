@@ -11,6 +11,12 @@ defmodule ImglabTest do
   @secure_salt "c9G9eYKCeWen7vkEyV1cnr4MZkfLI/yo6j72JItzKHjMGDNZKqPFzRtup//qiT51HKGJrAha6Gv2huSFLwJr"
 
   describe "url/3 using source name" do
+    test "without params" do
+      url = Imglab.url("assets", "example.jpeg")
+
+      assert url == "https://cdn.imglab.io/assets/example.jpeg"
+    end
+
     test "with params" do
       url = Imglab.url("assets", "example.jpeg", width: 200, height: 300, format: "png")
 
@@ -25,7 +31,9 @@ defmodule ImglabTest do
 
     test "with params using string path with inline params" do
       url =
-        Imglab.url("assets", "example.jpeg",
+        Imglab.url(
+          "assets",
+          "example.jpeg",
           width: 200,
           height: 300,
           watermark: "example.svg?width=100&format=png",
@@ -49,7 +57,7 @@ defmodule ImglabTest do
                "https://cdn.imglab.io/assets/example.jpeg?width=200&height=300&background-color=255%2C128%2C122%2C128"
     end
 
-    test "with params using name color macro" do
+    test "with params using named color macro" do
       url = Imglab.url("assets", "example.jpeg", width: 200, height: 300, background_color: color("blue"))
 
       assert url == "https://cdn.imglab.io/assets/example.jpeg?width=200&height=300&background-color=blue"
@@ -107,12 +115,6 @@ defmodule ImglabTest do
                "https://cdn.imglab.io/assets/example.jpeg?width=200&height=300&watermark=https%3A%2F%2Fcdn.imglab.io%2Fassets%2Fexample.svg%3Fwidth%3D100%26format%3Dpng&format=png"
     end
 
-    test "without params" do
-      url = Imglab.url("assets", "example.jpeg")
-
-      assert url == "https://cdn.imglab.io/assets/example.jpeg"
-    end
-
     test "with params using atoms with underscores" do
       url = Imglab.url("assets", "example.jpeg", trim: "color", trim_color: "orange")
 
@@ -151,6 +153,15 @@ defmodule ImglabTest do
   end
 
   describe "url/3 using source" do
+    test "without params" do
+      url =
+        "assets"
+        |> Source.new()
+        |> Imglab.url("example.jpeg")
+
+      assert url == "https://cdn.imglab.io/assets/example.jpeg"
+    end
+
     test "with params" do
       url =
         "assets"
@@ -216,15 +227,6 @@ defmodule ImglabTest do
 
       assert url ==
                "https://cdn.imglab.io/assets/example.jpeg?width=200&height=300&watermark=https%3A%2F%2Fcdn.imglab.io%2Fassets%2Fexample.svg%3Fwidth%3D100%26format%3Dpng&format=png"
-    end
-
-    test "without params" do
-      url =
-        "assets"
-        |> Source.new()
-        |> Imglab.url("example.jpeg")
-
-      assert url == "https://cdn.imglab.io/assets/example.jpeg"
     end
 
     test "with params using atoms with underscores" do
@@ -328,6 +330,15 @@ defmodule ImglabTest do
   end
 
   describe "url/3 using secure source" do
+    test "without params" do
+      url =
+        "assets"
+        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
+        |> Imglab.url("example.jpeg")
+
+      assert url == "https://cdn.imglab.io/assets/example.jpeg?signature=aRgmnJ-7b2A0QLxXpR3cqrHVYmCfpRCOglL-nsp7SdQ"
+    end
+
     test "with params" do
       url =
         "assets"
@@ -395,15 +406,6 @@ defmodule ImglabTest do
 
       assert url ==
                "https://cdn.imglab.io/assets/example.jpeg?width=200&height=300&watermark=https%3A%2F%2Fcdn.imglab.io%2Ffixtures%2Fexample.svg%3Fwidth%3D100%26format%3Dpng&format=png&signature=DiMzjeskcahfac0Xsy4QNj6qoU3dvKgOuFbHT7E4usU"
-    end
-
-    test "without params" do
-      url =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.url("example.jpeg")
-
-      assert url == "https://cdn.imglab.io/assets/example.jpeg?signature=aRgmnJ-7b2A0QLxXpR3cqrHVYmCfpRCOglL-nsp7SdQ"
     end
 
     test "with params using atoms with underscores" do
