@@ -22,7 +22,7 @@ $ mix deps.get
 
 ## Elixir compatibility
 
-`imglab` has been successfully tested on the following Elixir versions: `1.12`, `1.11`, `1.10`, `1.9`, `1.8`, `1.7`, `1.6`, `1.5`, and `1.4`.
+`imglab` has been successfully tested on the following Elixir versions: `1.13`, `1.12`, `1.11`, `1.10`, `1.9`, `1.8`, `1.7`, `1.6`, `1.5`, and `1.4`.
 
 ## Generating URLs
 
@@ -47,7 +47,7 @@ Imglab.url(Imglab.Source.new("assets"), "image.jpeg", width: 500, height: 600)
 
 ### Using secure image sources
 
-For source that require signed URLs you can specify `secure_key` and `secure_salt` attributes for the source:
+For sources that require signed URLs you can specify `secure_key` and `secure_salt` attributes for the source:
 
 ```elixir
 "assets"
