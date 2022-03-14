@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.12.3, 1.11.4, 1.10.4, 1.9.4, 1.8.2, 1.7.4, 1.6.6, 1.5.3, 1.4.5]
+        elixir: [1.13, 1.12.3, 1.11.4, 1.10.4, 1.9.4, 1.8.2, 1.7.4, 1.6.6, 1.5.3, 1.4.5]
     container: elixir:${{ matrix.elixir }}
     steps:
     - uses: actions/checkout@v2
