@@ -83,9 +83,26 @@ defmodule Imglab do
       scheme: Source.scheme(source),
       host: Source.host(source),
       port: source.port,
-      path: Path.join("/", Source.path(source, normalized_path)),
+      path: Path.join("/", Source.path(source, encode_path(normalized_path))),
       query: encode_params(source, normalized_path, normalized_params)
     })
+  end
+
+  @spec encode_path(binary) :: binary
+  defp encode_path(path) when is_binary(path) do
+    if Utils.web_uri?(path) do
+      encode_path_component(path)
+    else
+      path
+      |> String.split("/")
+      |> Enum.map(&encode_path_component/1)
+      |> Enum.join("/")
+    end
+  end
+
+  @spec encode_path_component(binary) :: binary
+  defp encode_path_component(path_component) when is_binary(path_component) do
+    URI.encode(path_component, &URI.char_unreserved?/1)
   end
 
   @spec encode_params(Source.t(), binary, list) :: binary

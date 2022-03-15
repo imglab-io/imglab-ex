@@ -1,6 +1,8 @@
 defmodule Imglab.Utils do
   @moduledoc false
 
+  @web_uri_schemes ~w[https http]
+
   @spec normalize_path(binary) :: binary
   def normalize_path(path) when is_binary(path) do
     String.trim(path, "/")
@@ -11,6 +13,11 @@ defmodule Imglab.Utils do
     Enum.map(params, fn {key, value} ->
       {dasherize(key), value}
     end)
+  end
+
+  @spec web_uri?(binary) :: boolean
+  def web_uri?(uri) when is_binary(uri) do
+    URI.parse(uri).scheme in @web_uri_schemes
   end
 
   @spec dasherize(atom | binary) :: binary
