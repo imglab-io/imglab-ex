@@ -47,7 +47,7 @@ Imglab.url(Imglab.Source.new("assets"), "image.jpeg", width: 500, height: 600)
 
 ### Using secure image sources
 
-For sources that require signed URLs you can specify `secure_key` and `secure_salt` attributes for the source:
+For sources that require signed URLs you can specify `secure_key` and `secure_salt` attributes:
 
 ```elixir
 "assets"
