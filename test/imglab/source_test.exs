@@ -15,12 +15,13 @@ defmodule Imglab.SourceTest do
              secure_salt: nil
            }
 
-    assert Source.new("assets", subdomains: true) == %Source{name: "assets", subdomains: true}
-    assert Source.new("assets", https: false) == %Source{name: "assets", https: false}
+
     assert Source.new("assets", host: "imglab.net") == %Source{name: "assets", host: "imglab.net"}
+    assert Source.new("assets", https: false) == %Source{name: "assets", https: false}
     assert Source.new("assets", port: 8080) == %Source{name: "assets", port: 8080}
     assert Source.new("assets", secure_key: "secure-key") == %Source{name: "assets", secure_key: "secure-key"}
     assert Source.new("assets", secure_salt: "secure-salt") == %Source{name: "assets", secure_salt: "secure-salt"}
+    assert Source.new("assets", subdomains: true) == %Source{name: "assets", subdomains: true}
   end
 
   test "scheme/1" do
