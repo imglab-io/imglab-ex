@@ -3,9 +3,9 @@ defmodule Imglab.Source do
   Provides a way to define and store information about a imglab source.
   """
 
-  @default_host "cdn.imglab.io"
+  @default_host "imglab-cdn.net"
   @default_https true
-  @default_subdomains false
+  @default_subdomains true
 
   @derive {Inspect, except: [:secure_key, :secure_salt]}
   @enforce_keys [:name]
@@ -37,12 +37,12 @@ defmodule Imglab.Source do
 
   The accepted options are:
 
-    * `:host` - a `string` specifying the host where the imglab server is located, only for imglab on-premises (default: `"cdn.imglab.io"`)
+    * `:host` - a `string` specifying the host where the imglab server is located, only for imglab on-premises (default: `"imglab-cdn.net"`)
     * `:https` - a `boolean` value specifying if the source should use https or not (default: `true`)
     * `:port` - a `:inet.port_number` specifying a port where the imglab server is located, only for imglab on-premises
     * `:secure_key` - a `string` specifying the source secure key
     * `:secure_salt` - a `string` specifying the source secure salt
-    * `:subdomains` - a `boolean` value specifying if the source should be specified using subdomains instead of using the path, only for imglab on-premises (default: `false`)
+    * `:subdomains` - a `boolean` value specifying if the source should be specified using subdomains instead of using the path, only for imglab on-premises (default: `true`)
 
   > Note: `secure_key` and `secure_salt` paramaters are secrets that should not be added to the code. Please use environment vars or other secure method to use them in your project.
 
@@ -50,24 +50,24 @@ defmodule Imglab.Source do
 
       iex> Imglab.Source.new("assets")
       %Imglab.Source{
-        host: "cdn.imglab.io",
-        https: true,
-        name: "assets",
-        port: nil,
-        secure_key: nil,
-        secure_salt: nil,
-        subdomains: false
-      }
-
-      iex> Imglab.Source.new("assets", subdomains: true)
-      %Imglab.Source{
-        host: "cdn.imglab.io",
+        host: "imglab-cdn.net",
         https: true,
         name: "assets",
         port: nil,
         secure_key: nil,
         secure_salt: nil,
         subdomains: true
+      }
+
+      iex> Imglab.Source.new("assets", subdomains: false)
+      %Imglab.Source{
+        host: "imglab-cdn.net",
+        https: true,
+        name: "assets",
+        port: nil,
+        secure_key: nil,
+        secure_salt: nil,
+        subdomains: false
       }
 
       iex> Imglab.Source.new("assets", https: false, host: "imglab.net", port: 8080)
@@ -78,18 +78,18 @@ defmodule Imglab.Source do
         port: 8080,
         secure_key: nil,
         secure_salt: nil,
-        subdomains: false
+        subdomains: true
       }
 
       iex> Imglab.Source.new("assets", secure_key: "secure-key", secure_salt: "secure-salt")
       %Imglab.Source{
-        host: "cdn.imglab.io",
+        host: "imglab-cdn.net",
         https: true,
         name: "assets",
         port: nil,
         secure_key: "secure-key",
         secure_salt: "secure-salt",
-        subdomains: false
+        subdomains: true
       }
 
   """
@@ -129,8 +129,8 @@ defmodule Imglab.Source do
   def path(%__MODULE__{} = source, path) when is_binary(path), do: Path.join(source.name, path)
 
   @doc false
-  @spec secure?(t) :: boolean
-  def secure?(%__MODULE__{} = source) do
+  @spec is_secure?(t) :: boolean
+  def is_secure?(%__MODULE__{} = source) do
     !is_nil(source.secure_key) && !is_nil(source.secure_salt)
   end
 end

@@ -4,7 +4,7 @@ defmodule Imglab.MixProject do
   def project do
     [
       app: :imglab,
-      version: "0.1.1",
+      version: "0.2.0",
       elixir: "~> 1.4",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -24,8 +24,8 @@ defmodule Imglab.MixProject do
 
   defp deps do
     [
-      {:ex_doc, "~> 0.25", only: :dev, runtime: false},
-      {:dialyxir, "~> 0.5", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.28", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.1", only: :dev, runtime: false}
     ]
   end
 
