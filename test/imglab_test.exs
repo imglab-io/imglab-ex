@@ -123,6 +123,12 @@ defmodule ImglabTest do
       assert url == "https://assets.imglab-cdn.net/example.jpeg?trim=color&trim-color=orange"
     end
 
+    test "with expires param using a DateTime struct" do
+      url = Imglab.url("assets", "example.jpeg", width: 200, height: 300, expires: DateTime.from_unix!(1464096368))
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&expires=1464096368"
+    end
+
     test "with path starting with slash" do
       url = Imglab.url("assets", "/example.jpeg", width: 200, height: 300, format: "png")
 
@@ -277,6 +283,15 @@ defmodule ImglabTest do
         |> Imglab.url("example.jpeg", trim: "color", trim_color: "orange")
 
       assert url == "https://assets.imglab-cdn.net/example.jpeg?trim=color&trim-color=orange"
+    end
+
+    test "with expires param using a DateTime struct" do
+      url =
+        "assets"
+        |> Source.new()
+        |> Imglab.url("example.jpeg", width: 200, height: 300, expires: DateTime.from_unix!(1464096368))
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&expires=1464096368"
     end
 
     test "with params using atoms with hyphens" do
@@ -532,6 +547,15 @@ defmodule ImglabTest do
         |> Imglab.url("example.jpeg", trim: "color", "trim-color": "orange")
 
       assert url == "https://assets.imglab-cdn.net/example.jpeg?trim=color&trim-color=orange&signature=cfYzBKvaWJhg_4ArtL5IafGYU6FEgRb_5ZADIgvviWw"
+    end
+
+    test "with expires param using a DateTime struct" do
+      url =
+        "assets"
+        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
+        |> Imglab.url("example.jpeg", width: 200, height: 300, expires: DateTime.from_unix!(1464096368))
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&expires=1464096368&signature=DpkRMiecDlOaQAQM5IQ8Cd4ek8nGvfPxV6XmCN0GbAU"
     end
 
     test "with disabled subdomains" do
