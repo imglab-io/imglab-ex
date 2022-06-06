@@ -27,6 +27,9 @@ defmodule Imglab.UtilsTest do
     assert Utils.normalize_params(width: 200, height: 300) == [{"width", 200}, {"height", 300}]
     assert Utils.normalize_params(trim: "color", trim_color: "orange") == [{"trim", "color"}, {"trim-color", "orange"}]
     assert Utils.normalize_params(trim: "color", "trim-color": "orange") == [{"trim", "color"}, {"trim-color", "orange"}]
+    assert Utils.normalize_params(width: 200, expires: 1464096368) == [{"width", 200}, {"expires", 1464096368}]
+    assert Utils.normalize_params(width: 200, expires: "1464096368") == [{"width", 200}, {"expires", "1464096368"}]
+    assert Utils.normalize_params(width: 200, expires: DateTime.from_unix!(1464096368)) == [{"width", 200}, {"expires", 1464096368}]
   end
 
   test "web_uri?/1" do

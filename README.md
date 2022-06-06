@@ -231,10 +231,10 @@ Imglab.url(
 
 The `expires` parameter allows you to specify a UNIX timestamp in seconds after which the request is expired.
 
-In the following example we specify an expiration time of one hour from the current time:
+If an Elixir `DateTime` struct is used as value to `expires` parameter it will be automatically converted to UNIX timestamp. In the following example, we specify an expiration time of one hour, adding 3600 seconds to the current time:
 
 ```elixir
-expires = DateTime.utc_now() |> DateTime.add(3600) |> DateTime.to_unix()
+expires = DateTime.add(DateTime.utc_now(), 3600)
 
 Imglab.url("assets", "image.jpeg", width: 500, expires: expires)
 ```
