@@ -44,7 +44,7 @@ defmodule Imglab.Source do
     * `:secure_salt` - a `string` specifying the source secure salt
     * `:subdomains` - a `boolean` value specifying if the source should be specified using subdomains instead of using the path, only for imglab on-premises (default: `true`)
 
-  > Note: `secure_key` and `secure_salt` paramaters are secrets that should not be added to the code. Please use environment vars or other secure method to use them in your project.
+  > Note: `secure_key` and `secure_salt` parameters are secrets that should not be added to the code. Please use environment vars or other secure method to use them in your project.
 
   ## Examples
 
