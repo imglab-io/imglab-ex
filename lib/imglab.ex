@@ -39,7 +39,7 @@ defmodule Imglab do
 
   The `signature` query string will be automatically added to the URL.
 
-  > Note: `secure_key` and `secure_salt` paramaters are secrets that should not be added to the code. Please use environment vars or other secure method to use them in your project.
+  > Note: `secure_key` and `secure_salt` parameters are secrets that should not be added to the code. Please use environment vars or other secure method to use them in your project.
 
   ## Path
 

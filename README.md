@@ -17,7 +17,7 @@ end
 And run:
 
 ```sh
-$ mix deps.get
+mix deps.get
 ```
 
 ## Elixir compatibility
