@@ -45,7 +45,7 @@ defmodule Imglab.Sequence do
       do: [first, last]
 
   def sequence(first, last, size) when is_integer(first) and is_integer(last) and is_integer(size) do
-    ratio = Float.pow(last / first, 1 / (size - 1))
+    ratio = :math.pow(last / first, 1 / (size - 1))
 
     first
     |> Stream.iterate(&(&1 * ratio))
