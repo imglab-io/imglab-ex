@@ -9,7 +9,7 @@ Add `imglab` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:imglab, "~> 0.2"}
+    {:imglab, "~> 0.3"}
   ]
 end
 ```
