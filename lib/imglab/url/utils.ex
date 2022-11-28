@@ -1,4 +1,4 @@
-defmodule Imglab.Utils do
+defmodule Imglab.Url.Utils do
   @moduledoc false
 
   @web_uri_schemes ~w[https http]

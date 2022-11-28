@@ -5,7 +5,7 @@ defmodule Imglab do
 
   alias Imglab.Source
   alias Imglab.Signature
-  alias Imglab.Utils
+  alias Imglab.Url
 
   @doc """
   Returns a formatted URL `string` with the specified parameters.
@@ -76,8 +76,8 @@ defmodule Imglab do
   end
 
   def url(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
-    normalized_path = Utils.normalize_path(path)
-    normalized_params = Utils.normalize_params(params)
+    normalized_path = Url.Utils.normalize_path(path)
+    normalized_params = Url.Utils.normalize_params(params)
 
     URI.to_string(%URI{
       scheme: Source.scheme(source),
@@ -90,7 +90,7 @@ defmodule Imglab do
 
   @spec encode_path(binary) :: binary
   defp encode_path(path) when is_binary(path) do
-    if Utils.web_uri?(path) do
+    if Url.Utils.web_uri?(path) do
       encode_path_component(path)
     else
       path

@@ -1,8 +1,8 @@
-defmodule Imglab.UtilsTest do
+defmodule Imglab.Url.UtilsTest do
   use ExUnit.Case
-  doctest Imglab.Utils
+  doctest Imglab.Url.Utils
 
-  alias Imglab.Utils
+  alias Imglab.Url.Utils
 
   test "normalize_path/1" do
     assert Utils.normalize_path("") == ""
