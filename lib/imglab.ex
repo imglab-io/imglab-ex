@@ -3,9 +3,6 @@ defmodule Imglab do
   Provides a set of functions to work with imglab services.
   """
 
-  alias Imglab.Url
-  alias Imglab.Source
-
   @doc """
   Returns a formatted URL `string` with the specified parameters.
 
@@ -68,13 +65,5 @@ defmodule Imglab do
 
   """
   @spec url(binary | Source.t(), binary, keyword) :: binary
-  def url(source_name_or_source, path, params \\ [])
-
-  def url(source_name, path, params) when is_binary(source_name) and is_binary(path) and is_list(params) do
-    url(Source.new(source_name), path, params)
-  end
-
-  def url(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
-    Url.new(source, path, params) |> Url.to_string()
-  end
+  defdelegate url(source_name_or_source, path, params \\ []), to: Imglab.Url
 end

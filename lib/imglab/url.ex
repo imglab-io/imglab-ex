@@ -1,49 +1,32 @@
 defmodule Imglab.Url do
   @moduledoc false
 
-  import Kernel, except: [to_string: 1]
-
   alias Imglab.Source
   alias Imglab.Signature
   alias Imglab.Url.Utils
 
-  defstruct [:source, :path, :params]
+  @spec url(binary | Source.t(), binary, keyword) :: binary
+  def url(source_name_or_source, path, params \\ [])
 
-  @type t :: %__MODULE__{
-          source: Source.t(),
-          path: binary,
-          params: keyword
-        }
-
-  @spec new(Source.t(), binary, keyword) :: t
-  def new(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
-    %__MODULE__{
-      source: source,
-      path: Utils.normalize_path(path),
-      params: Utils.normalize_params(params)
-    }
+  def url(source_name, path, params) when is_binary(source_name) and is_binary(path) and is_list(params) do
+    url(Source.new(source_name), path, params)
   end
 
-  @spec to_string(t) :: binary
-  def to_string(%__MODULE__{} = url) do
-    url
-    |> to_uri()
-    |> URI.to_string()
-  end
+  def url(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
+    normalized_path = Utils.normalize_path(path)
+    normalized_params = Utils.normalize_params(params)
 
-  @spec to_uri(t) :: URI.t()
-  defp to_uri(%__MODULE__{source: source} = url) do
-    %URI{
+    URI.to_string(%URI{
       scheme: Source.scheme(source),
       host: Source.host(source),
       port: source.port,
-      path: Path.join("/", Source.path(source, encode_path(url))),
-      query: encode_params(url)
-    }
+      path: Path.join("/", Source.path(source, encode_path(normalized_path))),
+      query: encode_params(source, normalized_path, normalized_params)
+    })
   end
 
-  @spec encode_path(t) :: binary
-  defp encode_path(%__MODULE__{path: path}) do
+  @spec encode_path(binary) :: binary
+  defp encode_path(path) when is_binary(path) do
     if Utils.web_uri?(path) do
       encode_path_component(path)
     else
@@ -59,8 +42,8 @@ defmodule Imglab.Url do
     URI.encode(path_component, &URI.char_unreserved?/1)
   end
 
-  @spec encode_params(t) :: binary
-  defp encode_params(%__MODULE__{source: source, path: path, params: params}) when length(params) > 0 do
+  @spec encode_params(Source.t(), binary, list) :: binary
+  defp encode_params(%Source{} = source, path, params) when is_binary(path) and is_list(params) and length(params) > 0 do
     if Source.is_secure?(source) do
       signature = Signature.generate(source, path, URI.encode_query(params))
 
@@ -70,7 +53,7 @@ defmodule Imglab.Url do
     end
   end
 
-  defp encode_params(%__MODULE__{source: source, path: path}) do
+  defp encode_params(%Source{} = source, path, _params) when is_binary(path) do
     if Source.is_secure?(source) do
       signature = Signature.generate(source, path)
 
