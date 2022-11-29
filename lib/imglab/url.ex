@@ -10,10 +10,10 @@ defmodule Imglab.Url do
   defstruct [:source, :path, :params]
 
   @type t :: %__MODULE__{
-    source: Source.t(),
-    path: binary,
-    params: keyword
-  }
+          source: Source.t(),
+          path: binary,
+          params: keyword
+        }
 
   @spec new(Source.t(), binary, keyword) :: t
   def new(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
