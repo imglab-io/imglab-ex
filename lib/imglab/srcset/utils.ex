@@ -10,13 +10,13 @@ defmodule Imglab.Srcset.Utils do
 
   @spec normalize_params(keyword) :: keyword
   def normalize_params(params) when is_list(params) do
-    Keyword.reject(params, fn {key, value} -> key in @normalize_keys && value == [] end)
+    Enum.reject(params, fn {key, value} -> key in @normalize_keys && value == [] end)
   end
 
   @spec replace_or_append_params(keyword, atom, any) :: keyword
   def replace_or_append_params(params, key, value) when is_list(params) and is_atom(key) do
     if Keyword.has_key?(params, key) do
-      Keyword.replace(params, key, value)
+      replace_params(params, key, value)
     else
       params ++ [{key, value}]
     end
@@ -28,8 +28,8 @@ defmodule Imglab.Srcset.Utils do
     |> split_values(@split_dpr_keys, Enum.count(Keyword.fetch!(params, :dpr)))
     |> Enum.map(fn {dpr, quality} ->
       params
-      |> Keyword.replace(:dpr, dpr)
-      |> Keyword.replace(:quality, quality)
+      |> replace_params(:dpr, dpr)
+      |> replace_params(:quality, quality)
     end)
   end
 
@@ -39,9 +39,9 @@ defmodule Imglab.Srcset.Utils do
     |> split_values(@split_width_keys, split_size(Keyword.fetch!(params, :width)))
     |> Enum.map(fn {width, height, quality} ->
       params
-      |> Keyword.replace(:width, width)
-      |> Keyword.replace(:height, height)
-      |> Keyword.replace(:quality, quality)
+      |> replace_params(:width, width)
+      |> replace_params(:height, height)
+      |> replace_params(:quality, quality)
     end)
   end
 
@@ -64,4 +64,19 @@ defmodule Imglab.Srcset.Utils do
   end
   defp split_value(_key, value, _size) when is_list(value), do: value
   defp split_value(_key, value, size), do: Stream.repeatedly(fn -> value end) |> Enum.take(size)
+
+  @spec replace_params(keyword, atom, any) :: keyword
+  defp replace_params(params, key, value) when is_list(params) and is_atom(key) do
+    do_replace_params(params, key, value)
+  end
+
+  defp do_replace_params([{key, _} | params], key, value) do
+    [{key, value} | Keyword.delete(params, key)]
+  end
+
+  defp do_replace_params([{_, _} = e | params], key, value) do
+    [e | do_replace_params(params, key, value)]
+  end
+
+  defp do_replace_params([], _key, _value), do: []
 end
