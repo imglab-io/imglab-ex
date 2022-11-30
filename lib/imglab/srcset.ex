@@ -3,10 +3,11 @@ defmodule Imglab.Srcset do
 
   alias Imglab.Url
   alias Imglab.Source
+  alias Imglab.Sequence
   alias Imglab.Srcset.Utils
 
   @default_dprs [1, 2, 3, 4, 5, 6]
-  @default_widths Imglab.Sequence.sequence(100, 8192)
+  @default_widths Sequence.sequence(100, 8192)
 
   @spec srcset(binary | Source.t(), binary, keyword) :: binary
   def srcset(source_name_or_source, path, params \\ [])
@@ -31,14 +32,7 @@ defmodule Imglab.Srcset do
           raise(ArgumentError, message: "height as enumerable is only allowed when width is also an enumerable")
         end
 
-        dpr =
-          if Enumerable.impl_for(params[:dpr]) do
-            params[:dpr]
-          else
-            @default_dprs
-          end
-
-        srcset_dpr(source, path, Utils.replace_or_append_params(params, :dpr, dpr))
+        srcset_dpr(source, path, Utils.replace_or_append_params(params, :dpr, dprs(params)))
 
       true ->
         if Enumerable.impl_for(params[:dpr]) do
@@ -61,5 +55,14 @@ defmodule Imglab.Srcset do
     Enum.map_join(Utils.split_width(params), ",\n", fn split_params ->
       "#{Url.url(source, path, split_params)} #{Keyword.fetch!(split_params, :width)}w"
     end)
+  end
+
+  @spec dprs(keyword) :: list
+  defp dprs(params) when is_list(params) do
+    if Enumerable.impl_for(params[:dpr]) do
+      params[:dpr]
+    else
+      @default_dprs
+    end
   end
 end
