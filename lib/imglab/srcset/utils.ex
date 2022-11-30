@@ -52,16 +52,18 @@ defmodule Imglab.Srcset.Utils do
   @spec split_values(keyword, list, integer) :: list
   defp split_values(params, keys, size) do
     keys
-    |> Enum.map(&(split_value(&1, Keyword.get(params, &1), size)))
+    |> Enum.map(&split_value(&1, Keyword.get(params, &1), size))
     |> Enum.zip()
   end
 
   @spec split_value(atom, any, integer) :: list
   defp split_value(:dpr, %Range{} = value, _size), do: Enum.to_list(value)
   defp split_value(_key, %Range{first: first, last: last}, size), do: Sequence.sequence(first, last, size)
+
   defp split_value(_key, value, size) when is_list(value) and length(value) < size do
     Enum.concat(value, Stream.repeatedly(fn -> nil end) |> Enum.take(size - length(value)))
   end
+
   defp split_value(_key, value, _size) when is_list(value), do: value
   defp split_value(_key, value, size), do: Stream.repeatedly(fn -> value end) |> Enum.take(size)
 
