@@ -43,6 +43,15 @@ defmodule Imglab.Srcset do
     end
   end
 
+  @spec dprs(keyword) :: list
+  defp dprs(params) when is_list(params) do
+    if Enumerable.impl_for(params[:dpr]) do
+      params[:dpr]
+    else
+      @default_dprs
+    end
+  end
+
   @spec srcset_dpr(Source.t(), binary, keyword) :: binary
   defp srcset_dpr(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
     Enum.map_join(Utils.split_dpr(params), ",\n", fn split_params ->
@@ -55,14 +64,5 @@ defmodule Imglab.Srcset do
     Enum.map_join(Utils.split_width(params), ",\n", fn split_params ->
       "#{Url.url(source, path, split_params)} #{Keyword.fetch!(split_params, :width)}w"
     end)
-  end
-
-  @spec dprs(keyword) :: list
-  defp dprs(params) when is_list(params) do
-    if Enumerable.impl_for(params[:dpr]) do
-      params[:dpr]
-    else
-      @default_dprs
-    end
   end
 end

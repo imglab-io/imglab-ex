@@ -70,7 +70,7 @@ defmodule Imglab do
   @doc """
   Returns a formatted srcset `string` with the specified parameters.
 
-  This function expects the same parameters and values as `url/3` with the exception of some params that has special meaning and can receive list, `Range` and `Imglab.Sequence` values.
+  This function expects the same parameters and values as `url/3` with the exception of some params that have a special meaning and can receive list, `Range` and `Imglab.Sequence` values.
 
   For more information about how to specify sources and paths take a look to `url/3` function.
 
@@ -86,7 +86,7 @@ defmodule Imglab do
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=5 5x,
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=6 6x"
 
-  You can specify a `Range` value for `quality` param so you can increasingly reduce the final size of the image for big dprs:
+  You can specify a `Range` value for `quality` parameter so you can increasingly reduce the final size of the image for big dprs:
 
       iex> Imglab.srcset("assets", "image.jpeg", width: 500, quality: 80..40)
       "https://assets.imglab-cdn.net/image.jpeg?width=500&quality=80&dpr=1 1x,
@@ -120,7 +120,7 @@ defmodule Imglab do
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=70 2x,
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=40 3x"
 
-  ## Dynamic size
+  ## Dynamic width
 
   It is possible to specify a dynamic `width` value using `Range`, lists or `Imglab.Sequence` values:
 
