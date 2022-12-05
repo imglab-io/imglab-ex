@@ -32,8 +32,7 @@ defmodule Imglab.Url do
     else
       path
       |> String.split("/")
-      |> Enum.map(&encode_path_component/1)
-      |> Enum.join("/")
+      |> Enum.map_join("/", &encode_path_component/1)
     end
   end
 
