@@ -1048,11 +1048,12 @@ defmodule Imglab.SrcsetTest do
   end
 
   describe "srcset/3 using source" do
-    test "without params" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg")
+    setup do
+      %{source: Source.new("assets")}
+    end
+
+    test "without params", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg")
 
       assert srcset ==
         """
@@ -1075,11 +1076,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without size params" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", aspect_ratio: "16:9", format: "png")
+    test "without size params", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", aspect_ratio: "16:9", format: "png")
 
       assert srcset ==
         """
@@ -1102,11 +1100,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with nil width" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: nil)
+    test "with nil width", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: nil)
 
       assert srcset ==
         """
@@ -1129,11 +1124,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with nil height" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: nil)
+    test "with nil height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: nil)
 
       assert srcset ==
         """
@@ -1156,11 +1148,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without widht, without height and with fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: 75)
+    test "without widht, without height and with fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: 75)
 
       assert srcset ==
         """
@@ -1183,11 +1172,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with nil quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: nil)
+    test "without width, without height and with nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: nil)
 
       assert srcset ==
         """
@@ -1210,11 +1196,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: 75..40)
+    test "without width, without height and with range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: 75..40)
 
       assert srcset ==
         """
@@ -1237,11 +1220,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: [])
+    test "without width, without height and with empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [])
 
       assert srcset ==
         """
@@ -1264,11 +1244,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: [75])
+    test "without width, without height and with list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [75])
 
       assert srcset ==
         """
@@ -1291,11 +1268,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", quality: [75, 70, 65])
+    test "without width, without height and with list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1318,11 +1292,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200)
+    test "with fixed width", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200)
 
       assert srcset ==
         """
@@ -1335,11 +1306,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 2)
+    test "with fixed width and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 2)
 
       assert srcset ==
         """
@@ -1352,11 +1320,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and nil dpr" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: nil)
+    test "with fixed width and nil dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: nil)
 
       assert srcset ==
         """
@@ -1369,11 +1334,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 1..4)
+    test "with fixed width and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 1..4)
 
       assert srcset ==
         """
@@ -1384,11 +1346,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [])
+    test "with fixed width and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [])
 
       assert srcset ==
         """
@@ -1401,20 +1360,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1])
+    test "with fixed width and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200&dpr=1 1x"
     end
 
-    test "with fixed width and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1, 2, 3])
+    test "with fixed width and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -1424,11 +1377,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: 75)
+    test "with fixed width and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: 75)
 
       assert srcset ==
         """
@@ -1441,11 +1391,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and nil quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: nil)
+    test "with fixed width and nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: nil)
 
       assert srcset ==
         """
@@ -1458,11 +1405,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: 75..40)
+    test "with fixed width and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: 75..40)
 
       assert srcset ==
         """
@@ -1475,11 +1419,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [])
+    test "with fixed width and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [])
 
       assert srcset ==
         """
@@ -1492,11 +1433,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [75])
+    test "with fixed width and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [75])
 
       assert srcset ==
         """
@@ -1509,11 +1447,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [75, 70, 65])
+    test "with fixed width and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1526,11 +1461,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 1..4, quality: 75..40)
+    test "with fixed width, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -1541,11 +1473,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed width, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1555,11 +1484,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200)
+    test "with fixed height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200)
 
       assert srcset,
         """
@@ -1572,11 +1498,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 2)
+    test "with fixed height and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 2)
 
       assert srcset ==
         """
@@ -1589,11 +1512,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and nil dpr" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: nil)
+    test "with fixed height and nil dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: nil)
 
       assert srcset ==
         """
@@ -1606,11 +1526,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 1..4)
+    test "with fixed height and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 1..4)
 
       assert srcset ==
         """
@@ -1621,11 +1538,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [])
+    test "with fixed height and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [])
 
       assert srcset ==
         """
@@ -1638,20 +1552,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1])
+    test "with fixed height and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?height=200&dpr=1 1x"
     end
 
-    test "with fixed height and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1, 2, 3])
+    test "with fixed height and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -1661,11 +1569,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: 75)
+    test "with fixed height and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: 75)
 
       assert srcset ==
         """
@@ -1678,11 +1583,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and nil quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: nil)
+    test "with fixed height and nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: nil)
 
       assert srcset ==
         """
@@ -1695,11 +1597,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: 75..40)
+    test "with fixed height and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: 75..40)
 
       assert srcset ==
         """
@@ -1712,11 +1611,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [])
+    test "with fixed height and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [])
 
       assert srcset ==
         """
@@ -1729,11 +1625,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [75])
+    test "with fixed height and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [75])
 
       assert srcset ==
         """
@@ -1746,11 +1639,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [75, 70, 65])
+    test "with fixed height and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1763,11 +1653,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 1..4, quality: 75..40)
+    test "with fixed height, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -1778,11 +1665,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed height, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1792,11 +1676,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed height" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300)
+    test "with fixed width and fixed height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300)
 
       assert srcset ==
         """
@@ -1809,11 +1690,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 2)
+    test "with fixed width, fixed height and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 2)
 
       assert srcset ==
         """
@@ -1826,11 +1704,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 1..4)
+    test "with fixed width, fixed height and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 1..4)
 
       assert srcset ==
         """
@@ -1841,11 +1716,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [])
+    test "with fixed width, fixed height and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [])
 
       assert srcset ==
         """
@@ -1858,20 +1730,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1])
+    test "with fixed width, fixed height and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&dpr=1 1x"
     end
 
-    test "with fixed width, fixed height and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1, 2, 3])
+    test "with fixed width, fixed height and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -1881,11 +1747,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: 75)
+    test "with fixed width, fixed height and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: 75)
 
       assert srcset ==
         """
@@ -1898,11 +1761,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: 75..40)
+    test "with fixed width, fixed height and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: 75..40)
 
       assert srcset ==
         """
@@ -1915,11 +1775,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [])
+    test "with fixed width, fixed height and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [])
 
       assert srcset ==
         """
@@ -1932,11 +1789,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [75])
+    test "with fixed width, fixed height and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [75])
 
       assert srcset ==
         """
@@ -1949,11 +1803,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [75, 70, 65])
+    test "with fixed width, fixed height and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1966,11 +1817,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 1..4, quality: 75..40)
+    test "with fixed width, fixed height, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -1981,11 +1829,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed width, fixed height, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -1995,11 +1840,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with range of widths" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 100..4096)
+    test "with range of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 100..4096)
 
       assert srcset ==
         """
@@ -2022,11 +1864,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with range of widths and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: 100..4096, quality: 70..40)
+    test "with range of widths and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 100..4096, quality: 70..40)
 
       assert srcset ==
         """
@@ -2049,11 +1888,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with sequence of widths" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: sequence(100, 4096, 6))
+    test "with sequence of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: sequence(100, 4096, 6))
 
       assert srcset ==
         """
@@ -2066,11 +1902,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with sequence of widths and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: sequence(100, 4096, 6), quality: 70..40)
+    test "with sequence of widths and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: sequence(100, 4096, 6), quality: 70..40)
 
       assert srcset ==
         """
@@ -2083,11 +1916,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with empty list of widths" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [])
+    test "with empty list of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [])
 
       assert srcset ==
         """
@@ -2110,20 +1940,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200])
+    test "with list of widths of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200 200w"
     end
 
-    test "with list of widths" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400])
+    test "with list of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400])
 
       assert srcset ==
         """
@@ -2133,11 +1957,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and range of heights" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: 300..500)
+    test "with list of widths and range of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: 300..500)
 
       assert srcset ==
         """
@@ -2147,11 +1968,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and empty list of heights" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [])
+    test "with list of widths and empty list of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [])
 
       assert srcset ==
         """
@@ -2161,11 +1979,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of heights of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300])
+    test "with list of widths and list of heights of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300])
 
       assert srcset ==
         """
@@ -2175,11 +1990,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of heights" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300, 400, 500])
+    test "with list of widths and list of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300, 400, 500])
 
       assert srcset ==
         """
@@ -2189,11 +2001,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and a range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: 75..40)
+    test "with list of widths and a range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: 75..40)
 
       assert srcset ==
         """
@@ -2203,11 +2012,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [])
+    test "with list of widths and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [])
 
       assert srcset ==
         """
@@ -2217,11 +2023,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [75])
+    test "with list of widths and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [75])
 
       assert srcset ==
         """
@@ -2231,11 +2034,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [75, 70, 65])
+    test "with list of widths and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [75, 70, 65])
 
       assert srcset,
         """
@@ -2245,11 +2045,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths, range of heights and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: 300..500, quality: 75..40)
+    test "with list of widths, range of heights and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: 300..500, quality: 75..40)
 
       assert srcset ==
         """
@@ -2259,11 +2056,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths, list of heights and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new()
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300, 400, 500], quality: [75, 70, 65])
+    test "with list of widths, list of heights and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300, 400, 500], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -2273,34 +2067,35 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "raises an argument error when width is enumerable and dpr is also enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: 100..300, dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: 100..300, dpr: [1, 2, 3]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: [100, 200, 300], dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: [100, 200, 300], dpr: [1, 2, 3]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: sequence(100, 300), dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: sequence(100, 300), dpr: [1, 2, 3]) end
+    test "raises an argument error when width is enumerable and dpr is also enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100..300, dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100..300, dpr: [1, 2, 3]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: [100, 200, 300], dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: [100, 200, 300], dpr: [1, 2, 3]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: sequence(100, 300), dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: sequence(100, 300), dpr: [1, 2, 3]) end
     end
 
-    test "raises an argument error when width is not enumerable and height is enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", height: 100..300) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", height: [100, 200, 300]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: 100, height: 100..300) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", width: 100, height: [100, 200, 300]) end
+    test "raises an argument error when width is not enumerable and height is enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", height: 100..300) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", height: [100, 200, 300]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100, height: 100..300) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100, height: [100, 200, 300]) end
     end
 
-    test "raises an argument error when width and height are not specified and dpr is enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets"), "example.jpeg", dpr: [1, 2, 3]) end
+    test "raises an argument error when width and height are not specified and dpr is enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", dpr: [1, 2, 3]) end
     end
   end
 
   describe "srcset/3 using secure source" do
-    test "without params" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg")
+    setup do
+      %{source: Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt)}
+    end
+
+    test "without params", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg")
 
       assert srcset ==
         """
@@ -2323,11 +2118,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without size params" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", aspect_ratio: "16:9", format: "png")
+    test "without size params", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", aspect_ratio: "16:9", format: "png")
 
       assert srcset ==
         """
@@ -2350,11 +2142,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with nil width" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: nil)
+    test "with nil width", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: nil)
 
       assert srcset ==
         """
@@ -2377,11 +2166,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with nil height" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: nil)
+    test "with nil height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: nil)
 
       assert srcset ==
         """
@@ -2404,11 +2190,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without widht, without height and with fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: 75)
+    test "without widht, without height and with fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: 75)
 
       assert srcset ==
         """
@@ -2431,11 +2214,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with nil quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: nil)
+    test "without width, without height and with nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: nil)
 
       assert srcset ==
         """
@@ -2458,11 +2238,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: 75..40)
+    test "without width, without height and with range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: 75..40)
 
       assert srcset ==
         """
@@ -2485,11 +2262,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: [])
+    test "without width, without height and with empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [])
 
       assert srcset ==
         """
@@ -2512,11 +2286,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: [75])
+    test "without width, without height and with list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [75])
 
       assert srcset ==
         """
@@ -2539,11 +2310,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "without width, without height and with list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", quality: [75, 70, 65])
+    test "without width, without height and with list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -2566,11 +2334,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200)
+    test "with fixed width", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200)
 
       assert srcset ==
         """
@@ -2583,11 +2348,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 2)
+    test "with fixed width and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 2)
 
       assert srcset ==
         """
@@ -2600,11 +2362,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and nil dpr" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: nil)
+    test "with fixed width and nil dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: nil)
 
       assert srcset ==
         """
@@ -2617,11 +2376,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 1..4)
+    test "with fixed width and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 1..4)
 
       assert srcset ==
         """
@@ -2632,11 +2388,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [])
+    test "with fixed width and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [])
 
       assert srcset ==
         """
@@ -2649,20 +2402,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1])
+    test "with fixed width and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200&dpr=1&signature=Dt2QjQRTGriKiEL8b4bd1oR0s4kk_YR-t5ip9FG_8r4 1x"
     end
 
-    test "with fixed width and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1, 2, 3])
+    test "with fixed width and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -2672,11 +2419,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: 75)
+    test "with fixed width and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: 75)
 
       assert srcset ==
         """
@@ -2689,11 +2433,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and nil quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: nil)
+    test "with fixed width and nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: nil)
 
       assert srcset ==
         """
@@ -2706,11 +2447,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: 75..40)
+    test "with fixed width and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: 75..40)
 
       assert srcset ==
         """
@@ -2723,11 +2461,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [])
+    test "with fixed width and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [])
 
       assert srcset ==
         """
@@ -2740,11 +2475,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [75])
+    test "with fixed width and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [75])
 
       assert srcset ==
         """
@@ -2757,11 +2489,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, quality: [75, 70, 65])
+    test "with fixed width and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -2774,11 +2503,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: 1..4, quality: 75..40)
+    test "with fixed width, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -2789,11 +2515,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed width, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -2803,11 +2526,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200)
+    test "with fixed height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200)
 
       assert srcset,
         """
@@ -2820,11 +2540,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 2)
+    test "with fixed height and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 2)
 
       assert srcset ==
         """
@@ -2837,11 +2554,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and nil dpr" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: nil)
+    test "with fixed height and nil dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: nil)
 
       assert srcset ==
         """
@@ -2854,11 +2568,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 1..4)
+    test "with fixed height and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 1..4)
 
       assert srcset ==
         """
@@ -2869,11 +2580,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [])
+    test "with fixed height and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [])
 
       assert srcset ==
         """
@@ -2886,20 +2594,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1])
+    test "with fixed height and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?height=200&dpr=1&signature=OPRYWD06ACeu6W8YXkZ87-swVGCl9hCk7bPLh_wn6Cw 1x"
     end
 
-    test "with fixed height and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1, 2, 3])
+    test "with fixed height and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -2909,11 +2611,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: 75)
+    test "with fixed height and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: 75)
 
       assert srcset ==
         """
@@ -2926,11 +2625,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and nil quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: nil)
+    test "with fixed height and nil quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: nil)
 
       assert srcset ==
         """
@@ -2943,11 +2639,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: 75..40)
+    test "with fixed height and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: 75..40)
 
       assert srcset ==
         """
@@ -2960,11 +2653,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [])
+    test "with fixed height and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [])
 
       assert srcset ==
         """
@@ -2977,11 +2667,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [75])
+    test "with fixed height and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [75])
 
       assert srcset ==
         """
@@ -2994,11 +2681,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, quality: [75, 70, 65])
+    test "with fixed height and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -3011,11 +2695,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: 1..4, quality: 75..40)
+    test "with fixed height, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -3026,11 +2707,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed height, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", height: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed height, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", height: 200, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -3040,11 +2718,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width and fixed height" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300)
+    test "with fixed width and fixed height", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300)
 
       assert srcset ==
         """
@@ -3057,11 +2732,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and fixed dpr" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 2)
+    test "with fixed width, fixed height and fixed dpr", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 2)
 
       assert srcset ==
         """
@@ -3074,11 +2746,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and range of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 1..4)
+    test "with fixed width, fixed height and range of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 1..4)
 
       assert srcset ==
         """
@@ -3089,11 +2758,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and empty list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [])
+    test "with fixed width, fixed height and empty list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [])
 
       assert srcset ==
         """
@@ -3106,20 +2772,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of dprs of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1])
+    test "with fixed width, fixed height and list of dprs of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&dpr=1&signature=IJM9kyvoH30hC2Xr0-FG9CZxYvDSy9MsZJBbs6Wm2kg 1x"
     end
 
-    test "with fixed width, fixed height and list of dprs" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1, 2, 3])
+    test "with fixed width, fixed height and list of dprs", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1, 2, 3])
 
       assert srcset ==
         """
@@ -3129,11 +2789,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and fixed quality" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: 75)
+    test "with fixed width, fixed height and fixed quality", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: 75)
 
       assert srcset ==
         """
@@ -3146,11 +2803,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: 75..40)
+    test "with fixed width, fixed height and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: 75..40)
 
       assert srcset ==
         """
@@ -3163,11 +2817,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [])
+    test "with fixed width, fixed height and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [])
 
       assert srcset ==
         """
@@ -3180,11 +2831,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [75])
+    test "with fixed width, fixed height and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [75])
 
       assert srcset ==
         """
@@ -3197,11 +2845,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, quality: [75, 70, 65])
+    test "with fixed width, fixed height and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -3214,11 +2859,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height, range of dprs and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: 1..4, quality: 75..40)
+    test "with fixed width, fixed height, range of dprs and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: 1..4, quality: 75..40)
 
       assert srcset ==
         """
@@ -3229,11 +2871,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with fixed width, fixed height, list of dprs and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 200, height: 300, dpr: [1, 2, 3], quality: [75, 70, 65])
+    test "with fixed width, fixed height, list of dprs and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 200, height: 300, dpr: [1, 2, 3], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -3243,11 +2882,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with range of widths" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 100..4096)
+    test "with range of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 100..4096)
 
       assert srcset ==
         """
@@ -3270,11 +2906,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with range of widths and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: 100..4096, quality: 70..40)
+    test "with range of widths and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: 100..4096, quality: 70..40)
 
       assert srcset ==
         """
@@ -3297,11 +2930,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with sequence of widths" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: sequence(100, 4096, 6))
+    test "with sequence of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: sequence(100, 4096, 6))
 
       assert srcset ==
         """
@@ -3314,11 +2944,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with sequence of widths and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: sequence(100, 4096, 6), quality: 70..40)
+    test "with sequence of widths and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: sequence(100, 4096, 6), quality: 70..40)
 
       assert srcset ==
         """
@@ -3331,11 +2958,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with empty list of widths" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [])
+    test "with empty list of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [])
 
       assert srcset ==
         """
@@ -3358,20 +2982,14 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200])
+    test "with list of widths of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200])
 
       assert srcset == "https://assets.imglab-cdn.net/example.jpeg?width=200&signature=oV-jpcwoz0-UdXsZCVCecPwJ3tb88vfb1lwM2nKfq60 200w"
     end
 
-    test "with list of widths" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400])
+    test "with list of widths", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400])
 
       assert srcset ==
         """
@@ -3381,11 +2999,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and range of heights" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: 300..500)
+    test "with list of widths and range of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: 300..500)
 
       assert srcset ==
         """
@@ -3395,11 +3010,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and empty list of heights" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [])
+    test "with list of widths and empty list of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [])
 
       assert srcset ==
         """
@@ -3409,11 +3021,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of heights of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300])
+    test "with list of widths and list of heights of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300])
 
       assert srcset ==
         """
@@ -3423,11 +3032,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of heights" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300, 400, 500])
+    test "with list of widths and list of heights", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300, 400, 500])
 
       assert srcset ==
         """
@@ -3437,11 +3043,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and a range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: 75..40)
+    test "with list of widths and a range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: 75..40)
 
       assert srcset ==
         """
@@ -3451,11 +3054,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and empty list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [])
+    test "with list of widths and empty list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [])
 
       assert srcset ==
         """
@@ -3465,11 +3065,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of qualities of size 1" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [75])
+    test "with list of widths and list of qualities of size 1", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [75])
 
       assert srcset ==
         """
@@ -3479,11 +3076,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], quality: [75, 70, 65])
+    test "with list of widths and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: [75, 70, 65])
 
       assert srcset,
         """
@@ -3493,11 +3087,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths, range of heights and range of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: 300..500, quality: 75..40)
+    test "with list of widths, range of heights and range of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: 300..500, quality: 75..40)
 
       assert srcset ==
         """
@@ -3507,11 +3098,8 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths, list of heights and list of qualities" do
-      srcset =
-        "assets"
-        |> Source.new(secure_key: @secure_key, secure_salt: @secure_salt)
-        |> Imglab.srcset("example.jpeg", width: [200, 300, 400], height: [300, 400, 500], quality: [75, 70, 65])
+    test "with list of widths, list of heights and list of qualities", %{source: source} do
+      srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], height: [300, 400, 500], quality: [75, 70, 65])
 
       assert srcset ==
         """
@@ -3521,25 +3109,25 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "raises an argument error when width is enumerable and dpr is also enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: 100..300, dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: 100..300, dpr: [1, 2, 3]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: [100, 200, 300], dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: [100, 200, 300], dpr: [1, 2, 3]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: sequence(100, 300), dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: sequence(100, 300), dpr: [1, 2, 3]) end
+    test "raises an argument error when width is enumerable and dpr is also enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100..300, dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100..300, dpr: [1, 2, 3]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: [100, 200, 300], dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: [100, 200, 300], dpr: [1, 2, 3]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: sequence(100, 300), dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: sequence(100, 300), dpr: [1, 2, 3]) end
     end
 
-    test "raises an argument error when width is not enumerable and height is enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", height: 100..300) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", height: [100, 200, 300]) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: 100, height: 100..300) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", width: 100, height: [100, 200, 300]) end
+    test "raises an argument error when width is not enumerable and height is enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", height: 100..300) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", height: [100, 200, 300]) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100, height: 100..300) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", width: 100, height: [100, 200, 300]) end
     end
 
-    test "raises an argument error when width and height are not specified and dpr is enumerable" do
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", dpr: 1..3) end
-      assert_raise ArgumentError, fn -> Imglab.srcset(Source.new("assets", secure_key: @secure_key, secure_salt: @secure_salt), "example.jpeg", dpr: [1, 2, 3]) end
+    test "raises an argument error when width and height are not specified and dpr is enumerable", %{source: source} do
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", dpr: 1..3) end
+      assert_raise ArgumentError, fn -> Imglab.srcset(source, "example.jpeg", dpr: [1, 2, 3]) end
     end
   end
 end
