@@ -289,9 +289,11 @@ In the case that your on-premises imglab server is configured to use source name
 
 ## Generating srcsets
 
-You can use `Imglab.srcset/3` function to generate custom values for `srcset` attributes, to be used for Web responsive images inside a `<img>` tag.
+You can use `Imglab.srcset/3` function to generate custom string values for `srcset` attributes, to be used for Web responsive images inside a `<img>` tag.
 
 This function works similarly to function `Imglab.url/3`, expecting the same parameters and values, except for some specific query parameters that have a special meaning and can receive `Range` and lists as values.
+
+> To learn more about responsive images and the `srcset` attribute, you can visit [Mozilla article about responsive images](https://developer.mozilla.org/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 ### Fixed size
 
@@ -310,7 +312,7 @@ https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=5 5x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=6 6x
 ```
 
-A very common practice consists in reducing the quality of images with high pixel density, decreasing the final file size. To achieve this you can optionally specify an Elixir  `Range` value for `quality` parameter, gradually reducing the file size while increasing the image size.
+A very common practice consists in reducing the quality of images with high pixel density, decreasing the final file size. To achieve this you can optionally specify an Elixir `Range` value for `quality` parameter, gradually reducing the file size while increasing the image size.
 
 In this example we are specifying a fixed `width` value of `500` pixels and a `quality` interval between `80` and `40`:
 
