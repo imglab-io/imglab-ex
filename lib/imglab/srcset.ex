@@ -19,24 +19,26 @@ defmodule Imglab.Srcset do
   def srcset(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
     params = Utils.normalize_params(params)
 
+    [width, height, dpr] = [params[:width], params[:height], params[:dpr]]
+
     cond do
-      Enumerable.impl_for(params[:width]) ->
-        if Enumerable.impl_for(params[:dpr]) do
-          raise(ArgumentError, message: "dpr as enumerable is not allowed when width is also an enumerable")
+      is_dynamic?(width) ->
+        if is_dynamic?(dpr) do
+          raise(ArgumentError, message: "dpr as list or Range is not allowed when width is also a list or Range")
         end
 
         srcset_width(source, path, params)
 
-      params[:width] || params[:height] ->
-        if Enumerable.impl_for(params[:height]) do
-          raise(ArgumentError, message: "height as enumerable is only allowed when width is also an enumerable")
+      width || height ->
+        if is_dynamic?(height) do
+          raise(ArgumentError, message: "height as list or Range is only allowed when width is also a list or Range")
         end
 
         srcset_dpr(source, path, Utils.replace_or_append_params(params, :dpr, dprs(params)))
 
       true ->
-        if Enumerable.impl_for(params[:dpr]) do
-          raise(ArgumentError, message: "dpr as enumerable is not allowed without specifying width or height")
+        if is_dynamic?(dpr) do
+          raise(ArgumentError, message: "dpr as list or Range is not allowed without specifying width or height")
         end
 
         srcset_width(source, path, Utils.replace_or_append_params(params, :width, @default_widths))
@@ -45,12 +47,17 @@ defmodule Imglab.Srcset do
 
   @spec dprs(keyword) :: list
   defp dprs(params) when is_list(params) do
-    if Enumerable.impl_for(params[:dpr]) do
+    if is_dynamic?(params[:dpr]) do
       params[:dpr]
     else
       @default_dprs
     end
   end
+
+  @spec is_dynamic?(any) :: boolean
+  defp is_dynamic?(value) when is_list(value), do: true
+  defp is_dynamic?(%Range{}), do: true
+  defp is_dynamic?(_value), do: false
 
   @spec srcset_dpr(Source.t(), binary, keyword) :: binary
   defp srcset_dpr(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
