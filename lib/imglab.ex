@@ -6,7 +6,7 @@ defmodule Imglab do
   @doc """
   Returns a formatted URL `string` with the specified parameters.
 
-  * `source_name_or_source` must be a `string` indicating a source name or a [Source struct](`t:Imglab.Source.t/0`).
+  * `source` must be a `string` indicating a source name or a [Source struct](`t:Imglab.Source.t/0`).
   * `path` must be a `string` indicating the path of the resource.
   * `params` must be an optional `keyword` list with the image parameters to use.
 
@@ -65,10 +65,14 @@ defmodule Imglab do
 
   """
   @spec url(binary | Imglab.Source.t(), binary, keyword) :: binary
-  defdelegate url(source_name_or_source, path, params \\ []), to: Imglab.Url
+  defdelegate url(source, path, params \\ []), to: Imglab.Url
 
   @doc """
   Returns a formatted srcset `string` with the specified parameters.
+
+  * `source` must be a `string` indicating a source name or a [Source struct](`t:Imglab.Source.t/0`).
+  * `path` must be a `string` indicating the path of the resource.
+  * `params` must be an optional `keyword` list with the image parameters to use.
 
   This function expects the same parameters and values as `url/3` with the exception of some params that have a special meaning and can receive list, `Range` and `Imglab.Sequence` values.
 
@@ -202,5 +206,5 @@ defmodule Imglab do
 
   """
   @spec srcset(binary | Imglab.Source.t(), binary, keyword) :: binary
-  defdelegate srcset(source_name_or_source, path, params \\ []), to: Imglab.Srcset
+  defdelegate srcset(source, path, params \\ []), to: Imglab.Srcset
 end

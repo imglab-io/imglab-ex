@@ -6,7 +6,7 @@ defmodule Imglab.Url do
   alias Imglab.Url.Utils
 
   @spec url(binary | Source.t(), binary, keyword) :: binary
-  def url(source_name_or_source, path, params \\ [])
+  def url(source, path, params \\ [])
 
   def url(source_name, path, params) when is_binary(source_name) and is_binary(path) and is_list(params) do
     url(Source.new(source_name), path, params)

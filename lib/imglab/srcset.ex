@@ -10,7 +10,7 @@ defmodule Imglab.Srcset do
   @default_widths Sequence.sequence(100, 8192)
 
   @spec srcset(binary | Source.t(), binary, keyword) :: binary
-  def srcset(source_name_or_source, path, params \\ [])
+  def srcset(source, path, params \\ [])
 
   def srcset(source_name, path, params) when is_binary(source_name) and is_binary(path) and is_list(params) do
     srcset(Source.new(source_name), path, params)
