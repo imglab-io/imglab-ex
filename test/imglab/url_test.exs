@@ -23,6 +23,12 @@ defmodule Imglab.UrlTest do
       assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&format=png"
     end
 
+    test "with nil params" do
+      url = Imglab.url("assets", "example.jpeg", width: 200, download: nil)
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&download="
+    end
+
     test "with params using string path" do
       url = Imglab.url("assets", "example.jpeg", width: 200, height: 300, watermark: "example.svg", format: "png")
 
@@ -219,6 +225,12 @@ defmodule Imglab.UrlTest do
       assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&format=png"
     end
 
+    test "with nil params", %{source: source} do
+      url = Imglab.url(source, "example.jpeg", width: 200, download: nil)
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&download="
+    end
+
     test "with params using string path", %{source: source} do
       url = Imglab.url(source, "example.jpeg", width: 200, height: 300, watermark: "example.svg", format: "png")
 
@@ -410,6 +422,12 @@ defmodule Imglab.UrlTest do
       url = Imglab.url(source, "example.jpeg", width: 200, height: 300, format: "png")
 
       assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&height=300&format=png&signature=VJ159IlBl_AlN59QWvyJov5SlQXlrZNpXgDJLJgzP8g"
+    end
+
+    test "with nil params", %{source: source} do
+      url = Imglab.url(source, "example.jpeg", width: 200, download: nil)
+
+      assert url == "https://assets.imglab-cdn.net/example.jpeg?width=200&download=&signature=ljL9HNRaxVrk7jfQaf6FPYFZn4RJzQPCW-aVNJoIQI8"
     end
 
     test "with params using string path", %{source: source} do

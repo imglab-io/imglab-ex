@@ -959,7 +959,7 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and a range of qualities" do
+    test "with list of widths and range of qualities" do
       srcset = Imglab.srcset("assets", "example.jpeg", width: [200, 300, 400], quality: 75..40)
 
       assert srcset ==
@@ -2001,7 +2001,7 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and a range of qualities", %{source: source} do
+    test "with list of widths and range of qualities", %{source: source} do
       srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: 75..40)
 
       assert srcset ==
@@ -3043,7 +3043,7 @@ defmodule Imglab.SrcsetTest do
         """
     end
 
-    test "with list of widths and a range of qualities", %{source: source} do
+    test "with list of widths and range of qualities", %{source: source} do
       srcset = Imglab.srcset(source, "example.jpeg", width: [200, 300, 400], quality: 75..40)
 
       assert srcset ==

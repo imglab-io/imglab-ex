@@ -22,22 +22,22 @@ defmodule Imglab.Srcset do
     [width, height, dpr] = [params[:width], params[:height], params[:dpr]]
 
     cond do
-      is_dynamic?(width) ->
-        if is_dynamic?(dpr) do
+      is_fluid?(width) ->
+        if is_fluid?(dpr) do
           raise(ArgumentError, message: "dpr as list or Range is not allowed when width is also a list or Range")
         end
 
         srcset_width(source, path, params)
 
       width || height ->
-        if is_dynamic?(height) do
+        if is_fluid?(height) do
           raise(ArgumentError, message: "height as list or Range is only allowed when width is also a list or Range")
         end
 
         srcset_dpr(source, path, Utils.replace_or_append_params(params, :dpr, dprs(params)))
 
       true ->
-        if is_dynamic?(dpr) do
+        if is_fluid?(dpr) do
           raise(ArgumentError, message: "dpr as list or Range is not allowed without specifying width or height")
         end
 
@@ -47,17 +47,17 @@ defmodule Imglab.Srcset do
 
   @spec dprs(keyword) :: list
   defp dprs(params) when is_list(params) do
-    if is_dynamic?(params[:dpr]) do
+    if is_fluid?(params[:dpr]) do
       params[:dpr]
     else
       @default_dprs
     end
   end
 
-  @spec is_dynamic?(any) :: boolean
-  defp is_dynamic?(value) when is_list(value), do: true
-  defp is_dynamic?(%Range{}), do: true
-  defp is_dynamic?(_value), do: false
+  @spec is_fluid?(any) :: boolean
+  defp is_fluid?(value) when is_list(value), do: true
+  defp is_fluid?(%Range{}), do: true
+  defp is_fluid?(_value), do: false
 
   @spec srcset_dpr(Source.t(), binary, keyword) :: binary
   defp srcset_dpr(%Source{} = source, path, params) when is_binary(path) and is_list(params) do
