@@ -291,13 +291,15 @@ In the case that your on-premises imglab server is configured to use source name
 
 You can use `Imglab.srcset/3` function to generate custom string values for `srcset` attributes, to be used for Web responsive images inside a `<img>` tag.
 
-This function works similarly to function `Imglab.url/3`, expecting the same parameters and values, except for some specific query parameters that have a special meaning and can receive `Range` and lists as values.
+This function works similarly to `Imglab.url/3`, expecting the same parameters and values, except for some specific query parameters that have a special meaning and can receive `Range` and lists as values.
 
-> To learn more about responsive images and the `srcset` attribute, you can visit [Mozilla article about responsive images](https://developer.mozilla.org/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
+> To learn more about responsive images and the `srcset` attribute, you can take a look to the [MDN article about responsive images](https://developer.mozilla.org/docs/Learn/HTML/Multimedia_and_embedding/Responsive_images).
 
 ### Fixed size
 
 When enough information is provided about the image output size (using `width` or `height` parameters), `srcset` function will generate URLs with a default sequence of device pixel ratios:
+
+For the following example we are specying a fixed value of `500` pixels for `width` parameter:
 
 ```elixir
 Imglab.srcset("assets", "image.jpeg", width: 500)
@@ -379,7 +381,7 @@ https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=70 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=70 3x
 ```
 
-### Dynamic width
+### Fluid width
 
 When a specific sequence of widths is required you can use a `Range`, `Imglab.Sequence`, or list for `width` parameter.
 
@@ -433,13 +435,13 @@ https://assets.imglab-cdn.net/image.jpeg?width=1638&quality=42 1638w,
 https://assets.imglab-cdn.net/image.jpeg?width=2000&quality=40 2000w
 ```
 
-If you want to generate a sequence of numbers for `width` parameter with a specific number of URLs you can use `Imglab.Sequence`:
+If you want to generate a sequence of numbers for `width` parameter with a specific number of URLs you can use `sequence` function helper:
 
 ```elixir
-# Remember to import Imglab.Sequence before using sequence/3 function
+# Remember to import Imglab.Sequence before using sequence/3 helper function
 import Imglab.Sequence
 
-# Generating a srcset string with a sequence between 100 and 2000 pixels for width parameter with a size of 5 URLs
+# Generating a srcset string with a sequence of 5 URLs between 100 and 2000 pixels for width parameter
 Imglab.srcset("assets", "image.jpeg", width: sequence(100, 2000, 5))
 ```
 
@@ -502,7 +504,7 @@ https://assets.imglab-cdn.net/image.jpeg?width=6107 6107w,
 https://assets.imglab-cdn.net/image.jpeg?width=8192 8192w
 ```
 
-It is always possible to change this default behavior using `Imglab.Sequence`. In the following example we are specifying a sequence between `320` and `4096` pixels and generating 10 different URLs:
+It is always possible to change this default behavior using `sequence` function helper. In the following example we are specifying a sequence of 10 different URLs between `320` and `4096` pixels:
 
 ```elixir
 import Imglab.Sequence
@@ -527,7 +529,7 @@ https://assets.imglab-cdn.net/image.jpeg?width=4096 4096w
 
 A usual scenario is to generate multiple URLs while maintaining the same aspect ratio for all of them. If a specific image aspect ratio is required while using `srcset` function you can set a value to `aspect-ratio` parameter along with `mode` parameter using  `crop`, `contain`, `face`, or `force` resize modes.
 
-For the following example we are using a specific value of  `300` pixels for `width` and an aspect ratio of `1:1` (square), cropping the image with `crop` resize mode and setting output format to `webp`:
+For the following example we are using a specific value of `300` pixels for `width` and an aspect ratio of `1:1` (square), cropping the image with `crop` resize mode and setting output format to `webp`:
 
 ```elixir
 Imglab.srcset("assets", "image.jpeg", width: 300, aspect_ratio: "1:1", mode: :crop, format: :webp)
@@ -542,7 +544,7 @@ https://assets.imglab-cdn.net/image.jpeg?width=300&aspect-ratio=1%3A1&mode=crop&
 https://assets.imglab-cdn.net/image.jpeg?width=300&aspect-ratio=1%3A1&mode=crop&format=webp&dpr=6 6x
 ```
 
-You can control `height` value too. In this example we are specifying a fixed value of `300` pixels for `height` parameter, a `aspect-ratio` of `16:9` (widescreen) with `crop` resize mode and `webp` output format:
+You can instead use `height` value. In this example we are specifying a fixed value of `300` pixels for `height` parameter, a `aspect-ratio` of `16:9` (widescreen) with `crop` resize mode, and `webp` output format:
 
 ```elixir
 Imglab.srcset("assets", "image.jpeg", height: 300, aspect_ratio: "16:9", mode: :crop, format: :webp)
@@ -557,7 +559,7 @@ https://assets.imglab-cdn.net/image.jpeg?height=300&aspect-ratio=16%3A9&mode=cro
 https://assets.imglab-cdn.net/image.jpeg?height=300&aspect-ratio=16%3A9&mode=crop&format=webp&dpr=6 6x
 ```
 
-You can also use dynamic width values while maintaining the same aspect ratio for all generated URLs. In this example, we are using a `Range` value between `100` and `4096` for `width` parameter with a value of  `1:1` for `aspect-ratio`, `crop` resize mode and `webp` output format:
+You can also use fluid values for `width` parameter while maintaining the same aspect ratio for all generated URLs. In this example, we are using a `range` value between `100` and `4096` for `width` parameter, a value of `1:1` for `aspect-ratio`, `crop` resize mode and `webp` output format:
 
 ```elixir
 Imglab.srcset("assets", "image.jpeg", width: 100..4096, aspect_ratio: "1:1", mode: :crop, format: :webp)
