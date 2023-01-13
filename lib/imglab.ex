@@ -124,9 +124,9 @@ defmodule Imglab do
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=70 2x,
       https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=40 3x"
 
-  ## Dynamic width
+  ## Fluid width
 
-  It is possible to specify a dynamic `width` value using `Range`, lists or `Imglab.Sequence` values:
+  It is possible to specify a fluid `width` value using `Range`, lists or `Imglab.Sequence` values:
 
       iex> Imglab.srcset("assets", "image.jpeg", width: 300..1000)
       "https://assets.imglab-cdn.net/image.jpeg?width=300 300w,
@@ -157,7 +157,7 @@ defmodule Imglab do
       https://assets.imglab-cdn.net/image.jpeg?width=669 669w,
       https://assets.imglab-cdn.net/image.jpeg?width=1000 1000w"
 
-  When specifying a dynamic `width` value is also possible to specify `height` and `quality` dynamic values:
+  When specifying a fluid `width` value is also possible to specify `height` and `quality` fluid values:
 
       iex> Imglab.srcset("assets", "image.jpeg", width: 300..1000, quality: 75..60)
       "https://assets.imglab-cdn.net/image.jpeg?width=300&quality=75 300w,
