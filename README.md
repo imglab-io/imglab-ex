@@ -289,7 +289,7 @@ In the case that your on-premises imglab server is configured to use source name
 
 ## Generating srcsets
 
-You can use `Imglab.srcset/3` function to generate custom string values for `srcset` attributes, to be used for Web responsive images inside a `<img>` tag.
+You can use `Imglab.srcset/3` function to generate custom string values for `srcset` attributes, to be used for Web responsive images inside an `<img>` HTML element or picture `<source>`.
 
 This function works similarly to `Imglab.url/3`, expecting the same parameters and values, except for some specific query parameters that have a special meaning and can receive `Range` and lists as values.
 
