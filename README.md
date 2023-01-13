@@ -305,7 +305,9 @@ For the following example we are specying a fixed value of `500` pixels for `wid
 Imglab.srcset("assets", "image.jpeg", width: 500)
 ```
 
-```
+Generating the following output:
+
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=1 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3 3x,
@@ -322,7 +324,7 @@ In this example we are specifying a fixed `width` value of `500` pixels and a `q
 Imglab.srcset("assets", "image.jpeg", width: 500, quality: 80..40)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&quality=80&dpr=1 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&quality=70&dpr=2 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&quality=61&dpr=3 3x,
@@ -337,7 +339,7 @@ A custom `Range` value can be set for `dpr` parameter too, overriding the defaul
 Imglab.srcset("assets", "image.jpeg", width: 500, dpr: 1..4)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=1 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3 3x,
@@ -350,7 +352,7 @@ Using `Range` values for `dpr` and `quality` parameters in the same `srcset` cal
 Imglab.srcset("assets", "image.jpeg", width: 500, dpr: 1..4, quality: 80..40)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=1&quality=80 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=63 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=50 3x,
@@ -363,7 +365,7 @@ If necessary you can also use lists with explicit values for `dpr` and `quality`
 Imglab.srcset("assets", "image.jpeg", width: 500, dpr: [1, 2, 3], quality: [80, 75, 60])
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=1&quality=80 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=75 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=60 3x
@@ -375,7 +377,7 @@ Or even use a specific `quality` value for all the URLs in the same srcset:
 Imglab.srcset("assets", "image.jpeg", width: 500, dpr: [1, 2, 3], quality: 70)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=1&quality=70 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=2&quality=70 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=500&dpr=3&quality=70 3x
@@ -391,7 +393,7 @@ When a `Range` value is used, a sequence with a default size of 16 URLs will be 
 Imglab.srcset("assets", "image.jpeg", width: 100..2000)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=122 122w,
 https://assets.imglab-cdn.net/image.jpeg?width=149 149w,
@@ -416,7 +418,7 @@ If required you can specify a `Range` value for `quality` parameter too:
 Imglab.srcset("assets", "image.jpeg", width: 100..2000, quality: 80..40)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100&quality=80 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=122&quality=76 122w,
 https://assets.imglab-cdn.net/image.jpeg?width=149&quality=73 149w,
@@ -445,7 +447,7 @@ import Imglab.Sequence
 Imglab.srcset("assets", "image.jpeg", width: sequence(100, 2000, 5))
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=211 211w,
 https://assets.imglab-cdn.net/image.jpeg?width=447 447w,
@@ -459,7 +461,7 @@ Using a list with specific values will generate URLs only for those widths:
 Imglab.srcset("assets", "image.jpeg", width: [100, 300, 500])
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=300 300w,
 https://assets.imglab-cdn.net/image.jpeg?width=500 500w
@@ -471,7 +473,7 @@ It is also possible to specify a list of values for `height` and `quality` param
 Imglab.srcset("assets", "image.jpeg", width: [100, 300, 500], height: [200, 400, 600], quality: [75, 70, 65])
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100&height=200&quality=75 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=300&height=400&quality=70 300w,
 https://assets.imglab-cdn.net/image.jpeg?width=500&height=600&quality=65 500w
@@ -485,7 +487,7 @@ When `srcset` function doesn't have information about the image output size (`wi
 Imglab.srcset("assets", "image.jpeg")
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=134 134w,
 https://assets.imglab-cdn.net/image.jpeg?width=180 180w,
@@ -512,7 +514,7 @@ import Imglab.Sequence
 Imglab.srcset("assets", "image.jpeg", width: sequence(320, 4096, 10))
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=320 320w,
 https://assets.imglab-cdn.net/image.jpeg?width=425 425w,
 https://assets.imglab-cdn.net/image.jpeg?width=564 564w,
@@ -535,7 +537,7 @@ For the following example we are using a specific value of `300` pixels for `wid
 Imglab.srcset("assets", "image.jpeg", width: 300, aspect_ratio: "1:1", mode: :crop, format: :webp)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=300&aspect-ratio=1%3A1&mode=crop&format=webp&dpr=1 1x,
 https://assets.imglab-cdn.net/image.jpeg?width=300&aspect-ratio=1%3A1&mode=crop&format=webp&dpr=2 2x,
 https://assets.imglab-cdn.net/image.jpeg?width=300&aspect-ratio=1%3A1&mode=crop&format=webp&dpr=3 3x,
@@ -550,7 +552,7 @@ You can instead use `height` value. In this example we are specifying a fixed va
 Imglab.srcset("assets", "image.jpeg", height: 300, aspect_ratio: "16:9", mode: :crop, format: :webp)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?height=300&aspect-ratio=16%3A9&mode=crop&format=webp&dpr=1 1x,
 https://assets.imglab-cdn.net/image.jpeg?height=300&aspect-ratio=16%3A9&mode=crop&format=webp&dpr=2 2x,
 https://assets.imglab-cdn.net/image.jpeg?height=300&aspect-ratio=16%3A9&mode=crop&format=webp&dpr=3 3x,
@@ -565,7 +567,7 @@ You can also use fluid values for `width` parameter while maintaining the same a
 Imglab.srcset("assets", "image.jpeg", width: 100..4096, aspect_ratio: "1:1", mode: :crop, format: :webp)
 ```
 
-```
+```html
 https://assets.imglab-cdn.net/image.jpeg?width=100&aspect-ratio=1%3A1&mode=crop&format=webp 100w,
 https://assets.imglab-cdn.net/image.jpeg?width=128&aspect-ratio=1%3A1&mode=crop&format=webp 128w,
 https://assets.imglab-cdn.net/image.jpeg?width=164&aspect-ratio=1%3A1&mode=crop&format=webp 164w,
