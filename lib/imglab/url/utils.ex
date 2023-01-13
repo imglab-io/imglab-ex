@@ -1,4 +1,4 @@
-defmodule Imglab.Utils do
+defmodule Imglab.Url.Utils do
   @moduledoc false
 
   @web_uri_schemes ~w[https http]
@@ -8,7 +8,7 @@ defmodule Imglab.Utils do
     String.trim(path, "/")
   end
 
-  @spec normalize_params(list) :: list
+  @spec normalize_params(keyword) :: list
   def normalize_params(params) when is_list(params) do
     Enum.map(params, fn {key, value} ->
       normalize_param(dasherize(key), value)
