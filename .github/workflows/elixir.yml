@@ -2,32 +2,35 @@ name: Elixir CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
-
-env:
-  MIX_ENV: test
+    branches: [main]
 
 jobs:
   build:
     name: Build and test
-    runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        elixir: ['1.14', '1.13', '1.12.3', '1.11.4', '1.10.4', '1.9.4', '1.8.2', '1.7.4', '1.6.6', '1.5.3', '1.4.5']
-    container: elixir:${{ matrix.elixir }}
+        elixir:
+          [
+            "1.4.5",
+            "1.5.3",
+            "1.6.6",
+            "1.7.4",
+            "1.8.2",
+            "1.9.4",
+            "1.10.4",
+            "1.11.4",
+            "1.12.3",
+            "1.13",
+            "1.14",
+          ]
+    runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v3
-    - name: Restore dependencies cache
-      uses: actions/cache@v3
-      with:
-        path: deps
-        key: ${{ runner.os }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
-        restore-keys: ${{ runner.os }}-${{ matrix.elixir }}-
-    - name: Install Hex
-      run: mix local.hex --force
-    - name: Install dependencies
-      run: mix deps.get
-    - name: Run tests
-      run: mix test
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: ${{matrix.elixir}}
+      - run: mix deps.get
+      - run: mix test
