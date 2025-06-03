@@ -6,24 +6,46 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  MIX_ENV: test
+
 jobs:
   build:
     name: Build and test
     strategy:
       fail-fast: false
       matrix:
-        # NOTE: For information about Elixir and Erlang/OTP versions:
-        # https://hexdocs.pm/elixir/compatibility-and-deprecations.html
-        include:
-          - elixir: "1.4.5"
-            otp: "20.3.8.26"
-    runs-on: ubuntu-24.04
+        elixir:
+          [
+            "1.4.5",
+            "1.5.3",
+            "1.6.6",
+            "1.7.4",
+            "1.8.2",
+            "1.9.4",
+            "1.10.4",
+            "1.11.4",
+            "1.12.3",
+            "1.13",
+            "1.14",
+            "1.15",
+            "1.16",
+            "1.17",
+            "1.18",
+          ]
+    runs-on: ubuntu-latest
+    container: elixir:${{ matrix.elixir }}
     steps:
       - uses: actions/checkout@v4
-      - uses: erlef/setup-beam@v1
+      - name: Restore dependencies cache
+        uses: actions/cache@v4
         with:
-          version-type: strict
-          elixir-version: ${{matrix.elixir}}
-          otp-version: ${{matrix.otp}}
-      - run: mix deps.get
-      - run: mix test
+          path: deps
+          key: ${{ runner.os }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-${{ matrix.elixir }}-
+      - name: Install Hex
+        run: mix local.hex --force
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run tests
+        run: mix test
