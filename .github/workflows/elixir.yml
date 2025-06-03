@@ -16,7 +16,7 @@ jobs:
         # https://hexdocs.pm/elixir/compatibility-and-deprecations.html
         include:
           - elixir: "1.4.5"
-            otp: "23"
+            otp: "20.3.8.26"
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
