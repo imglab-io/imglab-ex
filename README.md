@@ -9,7 +9,7 @@ Add `imglab` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:imglab, "~> 0.3"}
+    {:imglab, "~> 0.4"}
   ]
 end
 ```
@@ -22,7 +22,7 @@ mix deps.get
 
 ## Elixir compatibility
 
-`imglab` has been successfully tested on the following Elixir versions: `1.14`, `1.13`, `1.12`, `1.11`, `1.10`, `1.9`, `1.8`, `1.7`, `1.6`, `1.5`, and `1.4`.
+`imglab` has been successfully tested on the following Elixir versions: `1.18`, `1.17`, `1.16`, `1.15`, `1.14`, `1.13`, `1.12`, `1.11`, `1.10`, `1.9`, `1.8`, `1.7`, and `1.6`.
 
 ## Generating URLs
 
