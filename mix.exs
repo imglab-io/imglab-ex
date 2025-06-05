@@ -4,8 +4,8 @@ defmodule Imglab.MixProject do
   def project do
     [
       app: :imglab,
-      version: "0.3.0",
-      elixir: "~> 1.4",
+      version: "0.4.0",
+      elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
